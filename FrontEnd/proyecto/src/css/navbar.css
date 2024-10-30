@@ -1,0 +1,47 @@
+.navbar{
+    height: 80px;
+    background: #16325B;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.logo{
+    height: 60px;
+    margin: 10px;
+}
+
+.div-nav-img{
+    display: flex;
+}
+
+.div-nav-img h1{
+    margin-top: 20px;
+}
+
+.titulo-nav{
+    color: white;
+    margin-top: 10px;
+    font-size: 30px;
+}
+
+.menu-options ul {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Añade espacio entre las opciones */
+    margin: 0;
+    padding: 0;
+}
+
+.menu-options li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.menu-options li a:hover {
+    text-decoration: underline; /* Subraya el enlace cuando se pasa el cursor */
+}
