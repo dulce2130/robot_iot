@@ -1,13 +1,14 @@
-.container{
-    margin-top: 150px;
-    width: 100%;
-}
-#typewriter{
-    margin-top: 5px;
+.txt-inicial {
+    margin-top: 70px;
+    background: #FFDC7F;
+    padding: 20px; 
+    box-sizing: border-box; 
 }
 
-.txt-inicial{
-    margin-top: 150px;
-    background: #FFDC7F;
-    height: 100px;
+#typewriter {
+    margin: 0 auto; /* Centra el texto */
+    width: 100%;
+    text-align: center; /* Centra el texto horizontalmente */
+    font-size: 24px; /* Ajusta el tamaño de la fuente */
+    font-weight: bold;
 }
