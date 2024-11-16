@@ -3,7 +3,8 @@ import { AuthContext } from '../context/AuthContext';
 import "../css/inicio.css";
 import typewriterEffect from '../funciones/funciones.js';
 import NavBar from "../components/NavBar.js";
-import Charts from "../components/Charts";
+import Charts from "../components/Charts.js";
+import Footer from "../components/Footer.js";
 
 
 const Inicio = () => {
@@ -36,7 +37,7 @@ const Inicio = () => {
 
             <Charts />
 
-
+            <Footer />
         </>
     );
 };
