@@ -24,13 +24,13 @@ const NavBar = ({ showMenu }) => {
               <Link to="/inicio" className={location.pathname === '/inicio' ? 'active' : ''}>Inicio</Link>
             </li>
             <li>
-              <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>Acerca de</Link>
-            </li>
-            <li>
-              <Link to="/services" className={location.pathname === '/services' ? 'active' : ''}>Servicios</Link>
-            </li>
-            <li>
               <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contacto</Link>
+            </li>
+            <li>
+              <Link to="/services" className={location.pathname === '/perfil' ? 'active' : ''}>Perfil</Link>
+            </li>
+            <li>
+              <Link to="/about" className={location.pathname === '/out' ? 'active' : ''}>Cerrar sesión</Link>
             </li>
           </ul>
         </div>

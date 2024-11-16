@@ -14,19 +14,20 @@ conectarDB()
 const dominiosPermitidos = ["http://localhost:3000"]
 const corsOptions = {
     origin: function (origin, callback) {
-        if (dominiosPermitidos.indexOf(origin) !== 1) {
-            callback(null, true)
+        if (!origin || dominiosPermitidos.indexOf(origin) !== -1) {
+            callback(null, true);
         } else {
-            callback(new Error("No permitido por CORS"))
+            callback(new Error("No permitido por CORS"));
         }
     }
-}
+};
+
 
 
 app.use(cors(corsOptions))
 
 app.use("/api/user", userRoutes)
-app.use("/api/data", sensorRoutes)
+app.use("/api/sensors", sensorRoutes);
 
 app.listen(4000, () => {
     console.log("Servidor funcionando en el puerto 4000")

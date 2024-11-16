@@ -3,6 +3,8 @@ import { AuthContext } from '../context/AuthContext';
 import "../css/inicio.css";
 import typewriterEffect from '../funciones/funciones.js';
 import NavBar from "../components/NavBar.js";
+import Charts from "../components/Charts";
+
 
 const Inicio = () => {
     const { user } = useContext(AuthContext);
@@ -24,10 +26,17 @@ const Inicio = () => {
         <>
             <NavBar showMenu={true} />
 
-
             <div className='txt-inicial'>
                 <h2 className="text-primary mb-4" id="typewriter"></h2>
+                <div className="user-info">
+                    <p>Última sesión: {new Date().toLocaleDateString()}</p>
+                    <p>Te damos la bienvenida nuevamente.</p>
+                </div>
             </div>
+
+            <Charts />
+
+
         </>
     );
 };
