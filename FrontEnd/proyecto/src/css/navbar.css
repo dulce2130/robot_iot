@@ -1,0 +1,60 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1E3A8A;
+    padding: 10px 20px;
+    color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    top: 0;
+    position: fixed;
+    width: 100%;
+}
+
+.div-nav-img {
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.titulo-nav {
+    font-size: 25px;
+    font-weight: bold;
+    color: #fff;
+    height: 50px;
+    line-height: 60px;
+}
+
+.menu-options ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-options ul li {
+    margin: 0 15px;
+}
+
+.menu-options ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.menu-options ul li a:hover {
+    color: #FFD700;
+    /* Cambia el color al pasar el mouse */
+}
+
+.menu-options ul li a.active {
+    border-bottom: 2px solid #FFD700;
+    /* Resaltar página activa */
+}

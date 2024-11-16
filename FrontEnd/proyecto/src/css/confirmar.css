@@ -1,0 +1,14 @@
+.contenedor {
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.contenido{
+    display: block;
+}
+
+.btn-confirm {
+    display: flex;
+    justify-content: center;
+}

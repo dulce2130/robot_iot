@@ -1,0 +1,71 @@
+#Para este proyecto se ocupan 2 carpetas, una para el BackEnd y otra para el FrontEnd.
+
+Dentro de la carpeta de BackEnd, ejecutar el siguiente comando en la terminal
+npm init 
+Y se da enter en todas las opciones que aparezcan.
+En scripts del json que aparece en el paquete json, agregar:
+"start": "node index.js",
+"dev": "nodemon index.js",
+
+Agregar un index.js al nivel del json.
+
+Instalar express para las rutas
+npm i express
+
+Agregar   "type": "module", despues de la version en el json
+
+Instalar dependencia para no detener el servicio cada vez que se actualiza:
+npm i --save-dev nodemon
+
+
+
+En consola npm run start
+Ir a localhost:4000
+
+Sirve para que se siga ejecutando sin detenerse
+npm run dev
+
+
+Dependencia para la base de datos (Mongo)
+npm i mongoose
+
+Crear una carpeta config y dentro de esa db.js
+Crear una carpeta config y dentro de esa db.js
+
+Dependencias
+npm i bcrypt
+npm i jsonwebtoken
+npm install cors
+npm install nodemailer
+
+
+--------------------------------------
+Crear un proyecto react en la carpeta de FrontEnd
+npx create-react-app proyecto 
+
+npm start  --> para iniciar
+
+Dependencia
+npm install react-router-dom
+npm install axios
+
+
+-----
+Basee de datos 
+Usuario: dulce
+Pass: trPPwK2U9ZnSqtTD
+
+------
+Postman
+https://app.getpostman.com/join-team?invite_code=ff316155461e040710d9f1d7b7660ec8
+
+------
+Github
+
+git remote add origin https://github.com/tu-usuario/tu-repositorio.git
+
+git add .
+git commit -m "Descripción del cambio"
+git push origin main
+
+git push
