@@ -34,8 +34,6 @@
 .menu-options ul {
     display: flex;
     list-style-type: none;
-    margin: 0;
-    padding: 0;
 }
 
 .menu-options ul li {
@@ -56,5 +54,4 @@
 
 .menu-options ul li a.active {
     border-bottom: 2px solid #FFD700;
-    /* Resaltar página activa */
 }

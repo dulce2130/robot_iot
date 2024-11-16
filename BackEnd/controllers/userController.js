@@ -76,8 +76,8 @@ const confirmar = async (req, res) => {
     console.log(req.params.token)
 
     const { token } = req.params;
-
     const usuarioConfirmar = await User.findOne({ token });
+
 
     if (!usuarioConfirmar) {
         const error = new Error("Token no valido")
@@ -95,6 +95,7 @@ const confirmar = async (req, res) => {
             usuarioConfirmar.confirmado = true;
             await usuarioConfirmar.save();
         }, 300000); // 300000 ms = 5 minutos
+
 
     } catch (e) {
         console.log(e)
@@ -132,6 +133,7 @@ const perfil = (req, res) => {
 const comprobarToken = async (req, res) => {
     const { token } = req.params;
     try {
+
         const usuario = await User.findOne({ token: token });
 
         if (!usuario) {
@@ -249,5 +251,5 @@ export {
     autenticar,
     perfil,
     nuevoPassword,
-    olvidePassword
+    olvidePassword,
 }
