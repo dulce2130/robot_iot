@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import axios from 'axios';
 import 'chart.js/auto';
+import '../css/inicio.css';
 
 const Charts = () => {
   const [lastHourData, setLastHourData] = useState([]);
@@ -10,53 +11,70 @@ const Charts = () => {
 
   // Función para formatear los datos para Chart.js
   const formatData = (data, label) => {
+    const colors = [
+      'rgba(255, 99, 132, 0.6)', // Temperatura
+      'rgba(54, 162, 235, 0.6)', // Humedad
+      'rgba(255, 206, 86, 0.6)', // Sonido
+      'rgba(75, 192, 192, 0.6)', // Gas
+    ];
+
     return {
-      labels: data.map((d) => new Date(d.timestamp).toLocaleTimeString()), // Etiquetas (tiempo)
+      labels: data.map((d) =>
+        new Date(d.timestamp).toLocaleTimeString('es-MX', {
+          hour: '2-digit',
+          minute: '2-digit',
+        })
+      ),
       datasets: [
         {
-          label: `${label} - Temperatura (°C)`,
+          label: `Temperatura (°C)`,
           data: data.map((d) => d.temperature),
-          borderColor: 'rgba(255, 99, 132, 1)',
+          borderColor: colors[0],
           backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          fill: true,
+          borderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 6,
         },
         {
-          label: `${label} - Humedad (%)`,
+          label: `Humedad (%)`,
           data: data.map((d) => d.humidity),
-          borderColor: 'rgba(54, 162, 235, 1)',
+          borderColor: colors[1],
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          fill: true,
+          borderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 6,
         },
         {
-          label: `${label} - Nivel de Sonido`,
+          label: `Nivel de Sonido (Db)`,
           data: data.map((d) => d.sound),
-          borderColor: 'rgba(75, 192, 192, 1)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          fill: true,
+          borderColor: colors[2],
+          backgroundColor: 'rgba(255, 206, 86, 0.2)',
+          borderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 6,
         },
         {
-          label: `${label} - Gas`,
+          label: `Gas`,
           data: data.map((d) => d.gas),
-          borderColor: 'rgba(153, 102, 255, 1)',
-          backgroundColor: 'rgba(153, 102, 255, 0.2)',
-          fill: true,
+          borderColor: colors[3],
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 6,
         },
       ],
     };
   };
 
   useEffect(() => {
-    // Cargar datos de la última hora
     axios.get('http://localhost:4000/api/sensors/last-hour').then((response) => {
       setLastHourData(response.data);
     });
 
-    // Cargar datos de la última semana
     axios.get('http://localhost:4000/api/sensors/last-week').then((response) => {
       setLastWeekData(response.data);
     });
 
-    // Cargar datos del último mes
     axios.get('http://localhost:4000/api/sensors/last-month').then((response) => {
       setLastMonthData(response.data);
     });
@@ -65,13 +83,19 @@ const Charts = () => {
   return (
     <div>
       <h3>Datos Recopilados - Última Hora</h3>
-      <Line data={formatData(lastHourData, 'Última Hora')} />
+      <div className="chart-container">
+        <Line data={formatData(lastHourData, 'Última Hora')} />
+      </div>
 
       <h3>Datos Recopilados - Última Semana</h3>
-      <Line data={formatData(lastWeekData, 'Última Semana')} />
+      <div className="chart-container">
+        <Line data={formatData(lastWeekData, 'Última Semana')} />
+      </div>
 
       <h3>Datos Recopilados - Último Mes</h3>
-      <Line data={formatData(lastMonthData, 'Último Mes')} />
+      <div className="chart-container">
+        <Line data={formatData(lastMonthData, 'Último Mes')} />
+      </div>
     </div>
   );
 };

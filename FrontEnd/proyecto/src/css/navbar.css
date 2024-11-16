@@ -33,11 +33,13 @@
 
 .menu-options ul {
     display: flex;
+    align-items: center; 
     list-style-type: none;
 }
 
 .menu-options ul li {
     margin: 0 15px;
+    
 }
 
 .menu-options ul li a {
@@ -49,9 +51,25 @@
 
 .menu-options ul li a:hover {
     color: #FFD700;
-    /* Cambia el color al pasar el mouse */
 }
 
 .menu-options ul li a.active {
     border-bottom: 2px solid #FFD700;
 }
+
+.logout-button {
+    background-color: #1E3A8A; 
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    color: #FFD700; 
+  }
+  

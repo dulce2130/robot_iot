@@ -1,6 +1,6 @@
 .txt-inicial {
     margin-top: 70px;
-    background: #FFDC7F;
+    /*background: #FFDC7F;*/
     padding-top: 20px;
     padding-bottom: 10px;
     box-sizing: border-box;
@@ -14,23 +14,34 @@
     font-weight: bold;
 }
 
-.user-info{
+.user-info {
     text-align: center;
     font-size: small;
     color: #16325B;
 }
 
-.user-info p{
+.user-info p {
     margin: 2px;
 }
 
 h3 {
     text-align: center;
-    margin-top: 20px;
+    margin: 20px 0;
+    font-size: 1.5rem;
+    color: #333;
 }
 
 .chart-container {
     margin: 20px auto;
     width: 90%;
     max-width: 800px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.chart-container canvas {
+    background: linear-gradient(to top, #f0f8ff, #e6f7ff);
+}
+

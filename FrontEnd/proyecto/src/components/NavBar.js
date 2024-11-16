@@ -1,10 +1,22 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useContext } from 'react'; // Importa useContext
+import { Link, useLocation, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import "../css/navbar.css";
 import logo from '../images/logo2.webp';
+import { AuthContext } from "../context/AuthContext";
 
 const NavBar = ({ showMenu }) => {
   const location = useLocation();
+
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("¿Estás seguro de que deseas cerrar sesión?");
+    if (confirmLogout) {
+      logout();
+      navigate("/");
+    }
+  };
 
   return (
     <nav className="navbar">
@@ -30,7 +42,9 @@ const NavBar = ({ showMenu }) => {
               <Link to="/services" className={location.pathname === '/perfil' ? 'active' : ''}>Perfil</Link>
             </li>
             <li>
-              <Link to="/about" className={location.pathname === '/out' ? 'active' : ''}>Cerrar sesión</Link>
+              <button onClick={handleLogout} className="logout-button">
+                Cerrar sesión
+              </button>
             </li>
           </ul>
         </div>

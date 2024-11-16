@@ -44,6 +44,7 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
     };
+    
 
     return (
         <AuthContext.Provider value={{ user, location, login, logout }}>
