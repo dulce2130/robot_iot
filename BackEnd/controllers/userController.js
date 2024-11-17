@@ -90,7 +90,7 @@ const confirmar = async (req, res) => {
         await usuarioConfirmar.save();
 
         res.json({ mensaje: "La cuenta ha sido confirmada", confirmado: true })
-        
+
         setTimeout(async () => {
             usuarioConfirmar.confirmado = true;
             await usuarioConfirmar.save();
@@ -178,7 +178,7 @@ const nuevoPassword = async (req, res) => {
     }
 
     usuario.password = password;
-    usuario.token = null; 
+    usuario.token = null;
     await usuario.save();
     console.log(password);
     res.json({ mensaje: "Contraseña actualizada correctamente" });
@@ -242,6 +242,52 @@ const olvidePassword = async (req, res) => {
     res.json({ mensaje: "Se ha enviado un token de restablecimiento de contraseña" });
 };
 
+const recibirCorreo = async (req, res) => {
+    const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+        return res.status(400).json({ mensaje: "Todos los campos son obligatorios" });
+    }
+
+    try {
+        const transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'sanchezeria9@gmail.com',
+                pass: 'ormm foxe gchx whrh'
+            },
+        });
+
+        const mailOptions = {
+            from: email,
+            to: 'sanchezeria9@gmail.com',
+            subject: `Contaco de GuardianBot de ${name}`,
+            html: `
+                <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+                    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px;">
+                        <h2 style="color: #1E3A8A; text-align: center;">Contacto GuardianBot</h2>
+                        <p style="font-size: 16px; color: #333;">Has recibido un nuevo mensaje a través del formulario de contacto:</p>
+                        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;">
+                        <p style="font-size: 16px; color: #333;"><strong>Nombre:</strong> ${name}</p>
+                        <p style="font-size: 16px; color: #333;"><strong>Email:</strong> ${email}</p>
+                        <p style="font-size: 16px; color: #333;"><strong>Mensaje:</strong></p>
+                        <p style="font-size: 16px; color: #333;">${message}</p>
+                        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;">
+                        <p style="font-size: 14px; color: #999; text-align: center;">Este correo electrónico es generado automáticamente por GuardianBot.</p>
+                    </div>
+                </div> `,
+        };
+
+        await transport.sendMail(mailOptions);
+
+        res.status(200).json({ mensaje: "Mensaje enviado correctamente" });
+    } catch (error) {
+        console.error("Error al enviar el mensaje:", error);
+        res.status(500).json({ mensaje: "Hubo un error al enviar el mensaje" });
+    }
+};
+
+
 
 export {
     registrar,
@@ -252,4 +298,5 @@ export {
     perfil,
     nuevoPassword,
     olvidePassword,
+    recibirCorreo,
 }

@@ -1,6 +1,7 @@
 import express from "express";
 import { registrar, perfil, confirmar, autenticar, 
-    comprobarToken, eliminarToken, olvidePassword, nuevoPassword } from "../controllers/userController.js";
+    comprobarToken, eliminarToken, olvidePassword, nuevoPassword,
+    recibirCorreo} from "../controllers/userController.js";
 
 import checkAuth from "../middleware/authMiddleware.js";
 
@@ -17,5 +18,6 @@ router.get("/password/:token", comprobarToken)
 router.post("/password/:token", nuevoPassword)
 router.post('/eliminar-token/:token', eliminarToken);
 
+router.post('/recibir-correo', recibirCorreo);
 
 export default router
