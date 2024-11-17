@@ -1,0 +1,84 @@
+.about-container {
+  margin: 100px auto;
+  padding: 40px;
+  width: 90%;
+  max-width: 1200px;
+  background: linear-gradient(135deg, #1E3A8A 30%, #3F51B5 100%);
+  color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.about-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.about-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.about-section {
+  margin-top: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.about-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #FFD700;
+}
+
+.about-section p {
+  margin-bottom: 15px;
+  text-align: justify;
+}
+
+.about-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about-section ul li {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 25px;
+  font-size: 1rem;
+}
+
+.about-section ul li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #FFD700;
+  font-weight: bold;
+}
+
+.about-description {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  text-align: justify;
+}
+
+@media (max-width: 768px) {
+  .about-container {
+    padding: 20px;
+  }
+
+  .about-title {
+    font-size: 2rem;
+  }
+
+  .about-section h2 {
+    font-size: 1.5rem;
+  }
+}

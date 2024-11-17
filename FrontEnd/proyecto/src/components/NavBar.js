@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'; // Importa useContext
-import { Link, useLocation, useNavigate } from 'react-router-dom'; // Importa useNavigate
+import React, { useContext } from 'react'; 
+import { Link, useLocation, useNavigate } from 'react-router-dom'; 
 import "../css/navbar.css";
 import logo from '../images/logo2.webp';
 import { AuthContext } from "../context/AuthContext";
