@@ -37,6 +37,7 @@ npm i bcrypt
 npm i jsonwebtoken
 npm install cors
 npm install nodemailer
+npm install node-cron
 
 
 --------------------------------------

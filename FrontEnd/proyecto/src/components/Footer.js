@@ -12,7 +12,7 @@ const Footer = () => {
         <p>Tu aliado en seguridad y monitoreo inteligente.</p>
         <ul className="footer-links">
           <li><Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>Acerca de</Link></li>
-          <li><Link to="/contact" className={location.pathname === '/servicios' ? 'active' : ''}>Servicios</Link></li>
+          <li><Link to="/services" className={location.pathname === '/services' ? 'active' : ''}>Servicios</Link></li>
           <li><Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contacto</Link></li>
         </ul>
       </div>

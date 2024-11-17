@@ -24,24 +24,25 @@
     margin: 2px;
 }
 
-h3 {
-    text-align: center;
-    margin: 20px 0;
-    font-size: 1.5rem;
-    color: #333;
+
+.charts-container {
+    margin: 50px auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 1200px;
 }
 
 .chart-container {
-    margin: 20px auto;
-    width: 90%;
-    max-width: 800px;
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 10px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.chart-container canvas {
-    background: linear-gradient(to top, #f0f8ff, #e6f7ff);
+h3 {
+    text-align: center;
+    color: #1e3a8a;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
 }
-

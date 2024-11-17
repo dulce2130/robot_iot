@@ -10,6 +10,7 @@ import Inicio from './pages/InicioUser.js';
 import PrivateRoute from "./components/PrivateRoute";
 import Contacto from "./pages/Contacto.js";
 import About from './pages/About.js';
+import Services from './pages/Services.js';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="olvide-password/:token" element={<OlvidePassword />} />
             <Route path="/contact" element={<Contacto />} />
             <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
 
             <Route path='inicio' element={
               <PrivateRoute>

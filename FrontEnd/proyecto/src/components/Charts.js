@@ -9,62 +9,79 @@ const Charts = () => {
   const [lastWeekData, setLastWeekData] = useState([]);
   const [lastMonthData, setLastMonthData] = useState([]);
 
-  // Función para formatear los datos para Chart.js
-  const formatData = (data, label) => {
-    const colors = [
-      'rgba(255, 99, 132, 0.6)', // Temperatura
-      'rgba(54, 162, 235, 0.6)', // Humedad
-      'rgba(255, 206, 86, 0.6)', // Sonido
-      'rgba(75, 192, 192, 0.6)', // Gas
-    ];
-
-    return {
-      labels: data.map((d) =>
-        new Date(d.timestamp).toLocaleTimeString('es-MX', {
-          hour: '2-digit',
-          minute: '2-digit',
-        })
-      ),
-      datasets: [
-        {
-          label: `Temperatura (°C)`,
-          data: data.map((d) => d.temperature),
-          borderColor: colors[0],
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderWidth: 2,
-          pointRadius: 4,
-          pointHoverRadius: 6,
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: {
+          maxRotation: 45,
+          minRotation: 45,
+          color: '#062268',
         },
-        {
-          label: `Humedad (%)`,
-          data: data.map((d) => d.humidity),
-          borderColor: colors[1],
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderWidth: 2,
-          pointRadius: 4,
-          pointHoverRadius: 6,
+      },
+      y: {
+        ticks: {
+          beginAtZero: true,
+          color: '#062268',
         },
-        {
-          label: `Nivel de Sonido (Db)`,
-          data: data.map((d) => d.sound),
-          borderColor: colors[2],
-          backgroundColor: 'rgba(255, 206, 86, 0.2)',
-          borderWidth: 2,
-          pointRadius: 4,
-          pointHoverRadius: 6,
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+        labels: {
+          color: '#062268',
+          font: {
+            size: 14,
+          },
         },
-        {
-          label: `Gas`,
-          data: data.map((d) => d.gas),
-          borderColor: colors[3],
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderWidth: 2,
-          pointRadius: 4,
-          pointHoverRadius: 6,
-        },
-      ],
-    };
+      },
+    },
   };
+
+  const formatData = (data, label) => ({
+    labels: data.map((d) => d._id), // Los valores agrupados (_id) ya contienen el formato (hora, día o semana)
+    datasets: [
+      {
+        label: "Temperatura (°C)",
+        data: data.map((d) => d.avgTemperature),
+        borderColor: "rgba(255, 99, 132, 0.6)",
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      },
+      {
+        label: "Humedad (%)",
+        data: data.map((d) => d.avgHumidity),
+        borderColor: "rgba(54, 162, 235, 0.6)",
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        borderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      },
+      {
+        label: "Nivel de Sonido (Db)",
+        data: data.map((d) => d.avgSound),
+        borderColor: "rgba(255, 206, 86, 0.6)",
+        backgroundColor: "rgba(255, 206, 86, 0.2)",
+        borderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      },
+      {
+        label: "Gas",
+        data: data.map((d) => d.avgGas),
+        borderColor: "rgba(75, 192, 192, 0.6)",
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        borderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      },
+    ],
+  });
 
   useEffect(() => {
     axios.get('http://localhost:4000/api/sensors/last-hour').then((response) => {
@@ -84,17 +101,17 @@ const Charts = () => {
     <div>
       <h3>Datos Recopilados - Última Hora</h3>
       <div className="chart-container">
-        <Line data={formatData(lastHourData, 'Última Hora')} />
+        <Line data={formatData(lastHourData, 'Última Hora')} options={options} />
       </div>
 
       <h3>Datos Recopilados - Última Semana</h3>
       <div className="chart-container">
-        <Line data={formatData(lastWeekData, 'Última Semana')} />
+        <Line data={formatData(lastWeekData, 'Última Semana')} options={options} />
       </div>
 
       <h3>Datos Recopilados - Último Mes</h3>
       <div className="chart-container">
-        <Line data={formatData(lastMonthData, 'Último Mes')} />
+        <Line data={formatData(lastMonthData, 'Último Mes')} options={options} />
       </div>
     </div>
   );
