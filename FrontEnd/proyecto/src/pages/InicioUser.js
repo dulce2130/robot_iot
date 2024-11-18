@@ -34,22 +34,30 @@ const Inicio = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentTime(new Date());
-        }, 1000); // Actualiza cada segundo
-        return () => clearInterval(timer); // Limpia el intervalo cuando el componente se desmonta
+        }, 1000); 
+        return () => clearInterval(timer); 
     }, []);
 
     useEffect(() => {
-        fetch("http://localhost:4000/api/sensors/latest")
-            .then((res) => res.json())
-            .then((data) => {
-                setSensorData({
-                    temperature: `${data.temperature} °C`,
-                    humidity: `${data.humidity} %`,
-                    gas: `${data.gas} ppm`,
-                    sound: `${data.sound} dB`
-                });
-            })
-            .catch((err) => console.error("Error fetching sensor data:", err));
+        const fetchSensorData = () => {
+            fetch("http://localhost:4000/api/sensors/latest")
+                .then((res) => res.json())
+                .then((data) => {
+                    setSensorData({
+                        temperature: `${data.temperature} °C`,
+                        humidity: `${data.humidity} %`,
+                        gas: `${data.gas} ppm`,
+                        sound: `${data.sound} dB`
+                    });
+                })
+                .catch((err) => console.error("Error fetching sensor data:", err));
+        };
+    
+        fetchSensorData();
+    
+        const interval = setInterval(fetchSensorData, 3000); 
+
+        return () => clearInterval(interval); 
     }, []);
 
     return (
@@ -67,6 +75,14 @@ const Inicio = () => {
             <div className='datos-charts'>
                 <aside className="datos-actuales">
                     <h2 className="datos-title">Datos Actuales</h2>
+                    <div className="current-time">
+                        <p>
+                            <strong>Fecha:</strong> {currentTime.toLocaleDateString('es-MX')}
+                        </p>
+                        <p>
+                            <strong>Hora:</strong> {currentTime.toLocaleTimeString('es-MX')}
+                        </p>
+                    </div>
                     <ul className="datos-list">
                         <li>
                             <strong>🌡️ Temperatura:</strong> {sensorData.temperature}

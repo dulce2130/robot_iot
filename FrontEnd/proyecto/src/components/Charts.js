@@ -83,6 +83,7 @@ const Charts = () => {
     ],
   });
 
+
   useEffect(() => {
     axios.get('http://localhost:4000/api/sensors/last-hour').then((response) => {
       setLastHourData(response.data);
