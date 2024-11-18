@@ -94,7 +94,7 @@ const confirmar = async (req, res) => {
         setTimeout(async () => {
             usuarioConfirmar.confirmado = true;
             await usuarioConfirmar.save();
-        }, 300000); // 300000 ms = 5 minutos
+        }, 5000);
 
 
     } catch (e) {

@@ -3,6 +3,8 @@ import Alerta from "../components/Alerta.js";
 import axios from "axios";
 import '../css/registrar.css';
 import NavBar from "../components/NavBar.js"
+import robotTransparente from '../images/robotTransparente.png';
+
 
 const Registrar = () => {
 
@@ -10,6 +12,7 @@ const Registrar = () => {
     const [ap, setAp] = useState('');
     const [am, setAm] = useState('');
     const [email, setEmail] = useState('');
+    const [telefono, setTelefono] = useState('');
     const [password, setPassword] = useState('');
     const [repetirPassword, setRepetirPassword] = useState('');
 
@@ -18,6 +21,7 @@ const Registrar = () => {
     const limpiarCampos = () => {
         setNombre('');
         setEmail('');
+        setTelefono('');
         setPassword('');
         setRepetirPassword('');
     }
@@ -25,7 +29,7 @@ const Registrar = () => {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        if ([nombre, email, password, repetirPassword].includes('')) {
+        if ([nombre, email, telefono, password, repetirPassword].includes('')) {
             console.log("Hay campos vacios")
             setAlerta({
                 mensaje: "Hay campos vacios",
@@ -57,7 +61,7 @@ const Registrar = () => {
         try {
 
             const url = "http://localhost:4000/api/user"
-            await axios.post(url, { nombre, am, ap, email, password })
+            await axios.post(url, { nombre, am, ap, email, telefono, password })
             setAlerta({
                 mensaje: '¡Registrado con éxito! Revisa tu email para confirmar la cuenta',
                 error: false
@@ -82,7 +86,7 @@ const Registrar = () => {
                 <div className="row align-items-center justify-content-center">
                     <div className="col-lg-5 div">
                         <p className="fw-lighter">Te damos la bienvenida a nuestra página, por favor llena el formulario para continuar con tu registro.</p>
-                        <img className="imge" src="https://m.media-amazon.com/images/I/61nOFdRY9VL.jpg" alt="Robot Bienvenida" />
+                        <img className="imge" src= {robotTransparente} alt="Robot Bienvenida" />
                     </div>
 
                     <div className="col-lg-5">
@@ -111,8 +115,13 @@ const Registrar = () => {
                                 </div>
 
                                 <div className="mb-3">
+                                    <label htmlFor="telefono" className="form-label text">Teléfono:</label>
+                                    <input type="tel" value={telefono} onChange={e => setTelefono(e.target.value)} className="form-control" id="telefono" placeholder="Ej.: 7154567890" title="Introduce un número de teléfono válido"
+/>                                </div>
+
+                                <div className="mb-3">
                                     <label htmlFor="pass" className="form-label text">Contraseña:</label>
-                                    <input type="password" value={password} onChange={e => setPassword(e.target.value)} id="pass" className="form-control" aria-describedby="passwordHelpBlock" />
+                                    <input type="password" value={password} onChange={e => setPassword(e.target.value)} id="pass" className="form-control" placeholder="Debe tener almenos 6 carácteres" aria-describedby="passwordHelpBlock" />
                                 </div>
 
                                 <div className="mb-3">

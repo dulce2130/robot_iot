@@ -1,6 +1,19 @@
 import Sensor from "../models/Sensor.js";
 import cron from "node-cron";
 
+import nodemailer from "nodemailer";
+import twilio from "twilio";
+import User from "../models/Usuario.js";
+
+const twilioClient = twilio("ACeb008bbaf859106c6c2bc70f9958d3be", "7c545239b043e9a00bf73fa0031682a0");
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'sanchezeria9@gmail.com',
+        pass: 'ormm foxe gchx whrh',
+    },
+});
+
 const saveSensorData = async (req, res) => {
     try {
         const { temperature, humidity, sound, gas } = req.body;
@@ -19,6 +32,27 @@ const saveSensorData = async (req, res) => {
         res.status(500).json({ message: "Error al guardar datos" });
     }
 };
+
+const enviarCorreo = async (usuario, mensaje) => {
+    const mailOptions = {
+        from: 'sanchezeria9@gmail.com',
+        to: usuario.email,
+        subject: '⚠️ Alarma Activada - GuardianBot',
+        html: `
+            <div style="font-family: Arial, sans-serif; line-height: 1.8; color: #333;">
+                <h2>⚠️ Alarma Activada</h2>
+                <p>Hola, ${usuario.nombre},</p>
+                <p>Se ha detectado una anomalía en tu GuardianBot:</p>
+                <p><strong>${mensaje}</strong></p>
+                <p>Revisa tu dispositivo para más información.</p>
+            </div>
+        `,
+    };
+
+    await transporter.sendMail(mailOptions);
+};
+
+
 
 // obtener datos agregados
 const getAggregatedData = async (req, res, interval, groupBy) => {

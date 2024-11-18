@@ -68,74 +68,88 @@ const OlvidePassword = () => {
     }
 
     return (
-        <div className="container-sm divForm cont">
-            <h1>Restablecer Contraseña</h1>
-            {step === 1 && (
-                <form onSubmit={handleEmailSubmit} className="row g-3 needs-validation">
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Correo Electrónico:</label>
-                        <input
-                            type="email"
-                            className="form-control"
-                            id="email"
-                            placeholder="name@example.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="mb-3 divButton">
-                        <button type="submit" className="btn btn-outline-primary">Solicitar Restablecimiento</button>
-                    </div>
-                </form>
-            )}
+        <div className='cont'>
+            <div className="container-sm">
+                <h1>Restablecer Contraseña</h1>
+                {step === 1 && (
+                    <form onSubmit={handleEmailSubmit} className="row g-3 needs-validation">
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">Correo Electrónico:</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                placeholder="name@example.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3 divButton">
+                            <button type="submit" className="btn btn-outline-primary">Solicitar Restablecimiento</button>
+                        </div>
+                        <div className='divImgForgot'>
+                            <img className='imgForgot' src='https://i.pinimg.com/originals/a0/ba/95/a0ba951828efe9613d64db6e5b4f33e7.gif' alt='Gif gatito'></img>
+                        </div>
+                    </form>
+                )}
 
-            {step === 2 && (
-                <div>
-                    <p>{message}</p>
-                </div>
-            )}
-
-            {step === 3 && (
-                <form onSubmit={handlePasswordSubmit} className="row g-3 needs-validation">
-                    <div className="mb-3">
-                        <label htmlFor="newPassword" className="form-label">Nueva Contraseña:</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            id="newPassword"
-                            placeholder="Ingrese su nueva contraseña"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
+                {step === 2 && (
+                    <div className='mensaje'>
+                        <p>{message}</p>
+                        <div className='divImgForgot'>
+                            <img className='imgForgot' src='https://i.pinimg.com/originals/85/e5/c0/85e5c076df9b27722f0e411db0eacc6a.gif' alt='Gif gatito'></img>
+                        </div>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="confirmPassword" className="form-label">Confirmar Contraseña:</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            id="confirmPassword"
-                            placeholder="Confirme su nueva contraseña"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="mb-3 divButton">
-                        <button type="submit" className="btn btn-outline-primary">Guardar Contraseña</button>
-                    </div>
-                </form>
-            )}
 
-            {step === 4 && (
-                <div className='contenedor'>
-                    <p>{message}</p>
-                    <Link to="/" className="btn btn-outline-primary mt-3">Ir a Inicio de Sesión</Link>
-                </div>
-            )}
+                )}
 
-            {message && step !== 2 && step !== 4 && <p>{message}</p>}
+                {step === 3 && (
+                    <form onSubmit={handlePasswordSubmit} className="row g-3 needs-validation">
+                        <div className="mb-3">
+                            <label htmlFor="newPassword" className="form-label">Nueva Contraseña:</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="newPassword"
+                                placeholder="Ingrese su nueva contraseña"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="confirmPassword" className="form-label">Confirmar Contraseña:</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="confirmPassword"
+                                placeholder="Confirme su nueva contraseña"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3 divButton">
+                            <button type="submit" className="btn btn-outline-primary">Guardar Contraseña</button>
+                        </div>
+                    </form>
+                )}
+
+                {step === 4 && (
+                    <div className='cont'>
+                        <div className=''>
+                            <p>{message}</p>
+                            <div className='divImgForgot'>
+                                <img className='imgForgot' src='https://i.pinimg.com/originals/ea/ca/0c/eaca0cca4b6561bd63b87f2104e91010.gif' alt='Gif gatito'></img>
+                            </div>
+                            <Link to="/" className="btn btn-outline-primary mt-3">Ir a Inicio de Sesión</Link>
+                        </div>
+                    </div>
+                )}
+
+                {message && step !== 2 && step !== 4 && <p>{message}</p>}
+            </div>
         </div>
     );
 };
