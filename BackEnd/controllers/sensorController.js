@@ -4,8 +4,10 @@ import cron from "node-cron";
 import nodemailer from "nodemailer";
 import twilio from "twilio";
 import User from "../models/Usuario.js";
+require('dotenv').config();
 
-const twilioClient = twilio("ACeb008bbaf859106c6c2bc70f9958d3be", "7c545239b043e9a00bf73fa0031682a0");
+const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
