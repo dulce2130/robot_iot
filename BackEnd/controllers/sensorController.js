@@ -4,9 +4,15 @@ import cron from "node-cron";
 import nodemailer from "nodemailer";
 import twilio from "twilio";
 import User from "../models/Usuario.js";
-require('dotenv').config();
 
-const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+const accountSid = 'ACeb008bbaf859106c6c2bc70f9958d3be';
+const authToken = '7c545239b043e9a00bf73fa0031682a0';
+const twilioClient = twilio(accountSid, authToken);
+
+const temperatureUmbral = 38
+const humidityUmbral = 75
+const soundUmbral = 3000
+const gasUmbral = 1700
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -16,24 +22,6 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-const saveSensorData = async (req, res) => {
-    try {
-        const { temperature, humidity, sound, gas } = req.body;
-        const newData = new Sensor({
-            temperature,
-            humidity,
-            sound,
-            gas,
-            timestamp: new Date()
-        });
-        await newData.save();
-
-        res.status(200).json({ message: "Datos guardados correctamente" });
-    } catch (error) {
-        console.error("Error al guardar datos:", error);
-        res.status(500).json({ message: "Error al guardar datos" });
-    }
-};
 
 const enviarCorreo = async (usuario, mensaje) => {
     const mailOptions = {
@@ -54,7 +42,55 @@ const enviarCorreo = async (usuario, mensaje) => {
     await transporter.sendMail(mailOptions);
 };
 
+const enviarSMS = async (usuario, mensaje) => {
+    await twilioClient.messages.create({
+        body: `⚠️ Alarma Activada - GuardianBot: ${mensaje}`,
+        from: "+12565791571",
+        to: usuario.telefono
+    });
+};
 
+const saveSensorData = async (req, res) => {
+    try {
+        const { temperature, humidity, sound, gas } = req.body;
+
+        const newData = new Sensor({
+            temperature,
+            humidity,
+            sound,
+            gas,
+            timestamp: new Date(),
+        });
+        await newData.save();
+
+        const usuario = await User.findOne();
+
+        const mensajesAlarma = [];
+        if (temperature > temperatureUmbral) {
+            mensajesAlarma.push(`Temperatura fuera de rango: ${temperature} °C`);
+        }
+        if (humidity > humidityUmbral) {
+            mensajesAlarma.push(`Humedad fuera de rango: ${humidity}%`);
+        }
+        if (sound > soundUmbral) {
+            mensajesAlarma.push(`Nivel de sonido fuera de rango: ${sound} dB`);
+        }
+        if (gas > gasUmbral) {
+            mensajesAlarma.push(`Concentración de gas elevada: ${gas} ppm`);
+        }
+
+        if (mensajesAlarma.length > 0) {
+            const mensaje = mensajesAlarma.join(", ");
+            await enviarCorreo(usuario, mensaje);
+            await enviarSMS(usuario, mensaje);
+        }
+
+        res.status(200).json({ message: "Datos guardados correctamente" });
+    } catch (error) {
+        console.error("Error al guardar datos:", error);
+        res.status(500).json({ message: "Error al guardar datos" });
+    }
+};
 
 // obtener datos agregados
 const getAggregatedData = async (req, res, interval, groupBy) => {
