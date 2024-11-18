@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import "../css/inicio.css";
 import typewriterEffect from '../funciones/funciones.js';
@@ -10,6 +10,14 @@ import Footer from "../components/Footer.js";
 const Inicio = () => {
     const { user } = useContext(AuthContext);
     const nombre = user?.nombre;
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    const [sensorData, setSensorData] = useState({
+        temperature: "Cargando...",
+        humidity: "Cargando...",
+        gas: "Cargando...",
+        sound: "Cargando..."
+    });
 
     const getSaludo = () => {
         const hora = new Date().getHours();
@@ -23,6 +31,27 @@ const Inicio = () => {
         typewriterEffect(nombre, saludo);
     }, [nombre]);
 
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000); // Actualiza cada segundo
+        return () => clearInterval(timer); // Limpia el intervalo cuando el componente se desmonta
+    }, []);
+
+    useEffect(() => {
+        fetch("http://localhost:4000/api/sensors/latest")
+            .then((res) => res.json())
+            .then((data) => {
+                setSensorData({
+                    temperature: `${data.temperature} °C`,
+                    humidity: `${data.humidity} %`,
+                    gas: `${data.gas} ppm`,
+                    sound: `${data.sound} dB`
+                });
+            })
+            .catch((err) => console.error("Error fetching sensor data:", err));
+    }, []);
+
     return (
         <>
             <NavBar showMenu={true} />
@@ -35,7 +64,27 @@ const Inicio = () => {
                 </div>
             </div>
 
-            <Charts />
+            <div className='datos-charts'>
+                <aside className="datos-actuales">
+                    <h2 className="datos-title">Datos Actuales</h2>
+                    <ul className="datos-list">
+                        <li>
+                            <strong>🌡️ Temperatura:</strong> {sensorData.temperature}
+                        </li>
+                        <li>
+                            <strong>💧 Humedad:</strong> {sensorData.humidity}
+                        </li>
+                        <li>
+                            <strong>🛢️ Concentración de Gas:</strong> {sensorData.gas}
+                        </li>
+                        <li>
+                            <strong>🔊 Ruido:</strong> {sensorData.sound}
+                        </li>
+                    </ul>
+                </aside>
+                <Charts />
+
+            </div>
 
             <Footer />
         </>

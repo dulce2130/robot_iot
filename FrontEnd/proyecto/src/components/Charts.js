@@ -42,7 +42,7 @@ const Charts = () => {
   };
 
   const formatData = (data, label) => ({
-    labels: data.map((d) => d._id), // Los valores agrupados (_id) ya contienen el formato (hora, día o semana)
+    labels: data.map((d) => d._id),
     datasets: [
       {
         label: "Temperatura (°C)",
@@ -98,18 +98,19 @@ const Charts = () => {
   }, []);
 
   return (
-    <div>
-      <h3>Datos Recopilados - Última Hora</h3>
+    <div className='graphic-contain'>
+      <h2>Datos Recopilados</h2>
+      <h3>Última Hora</h3>
       <div className="chart-container">
         <Line data={formatData(lastHourData, 'Última Hora')} options={options} />
       </div>
 
-      <h3>Datos Recopilados - Última Semana</h3>
+      <h3>Última Semana</h3>
       <div className="chart-container">
         <Line data={formatData(lastWeekData, 'Última Semana')} options={options} />
       </div>
 
-      <h3>Datos Recopilados - Último Mes</h3>
+      <h3>Último Mes</h3>
       <div className="chart-container">
         <Line data={formatData(lastMonthData, 'Último Mes')} options={options} />
       </div>

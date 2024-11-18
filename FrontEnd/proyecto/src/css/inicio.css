@@ -24,6 +24,27 @@
     margin: 2px;
 }
 
+.datos-charts{
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.datos-charts h2{
+    background: #1e3a8a;
+    color: #ffffff;
+    padding: 5px;
+    font-size: 26px;
+    text-align: center;
+    border-radius: 30px;
+}
+
+.graphic-contain{
+    width: 60%;
+    text-align: center;
+    margin-left: 30px;
+}
 
 .charts-container {
     margin: 50px auto;
@@ -44,5 +65,47 @@ h3 {
     text-align: center;
     color: #1e3a8a;
     margin-bottom: 20px;
-    font-size: 1.8rem;
+    font-size: 24px;
+}
+
+.datos-actuales {
+    width: 36%;
+}
+
+.datos-title {
+    text-align: center;
+    color: #1e3a8a;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.datos-list {
+    list-style: none;
+    background: linear-gradient(135deg, #d2faff, #fff7e1);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-right: 20px;
+    margin-top: 30px;
+}
+
+.datos-list li {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #16325B;
+}
+
+.datos-list li strong {
+    color: #1e3a8a;
+    margin-right: 5px;
+}
+
+.datos-list li:last-child {
+    margin-bottom: 0;
 }
