@@ -126,3 +126,8 @@ h3 {
     color: #062268;
     text-align: center;
 }
+
+.datos-actuales div img {
+    width: 400px;
+    margin-left: 0;
+}

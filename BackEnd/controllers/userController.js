@@ -137,6 +137,39 @@ const perfil = (req, res) => {
     res.json({ perfil: user })
 }
 
+const actualizarPerfil = async (req, res) => {
+    try {
+        const usuario = await User.findById(req.user._id);
+        if (!usuario) {
+            return res.status(404).json({ mensaje: "Usuario no encontrado" });
+        }
+
+        const { telefono, profileImage } = req.body;
+
+        // Actualizar teléfono si se proporciona
+        if (telefono) {
+            usuario.telefono = telefono;
+        }
+
+        // Actualizar imagen de perfil si se proporciona
+        if (profileImage) {
+            usuario.profileImage = profileImage; // Guardar directamente en MongoDB
+        }
+
+        await usuario.save();
+
+        res.status(200).json({
+            mensaje: "Perfil actualizado correctamente",
+            usuario,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensaje: "Error al actualizar el perfil" });
+    }
+};
+
+
+
 const comprobarToken = async (req, res) => {
     const { token } = req.params;
     try {
@@ -306,4 +339,6 @@ export {
     nuevoPassword,
     olvidePassword,
     recibirCorreo,
+    actualizarPerfil,
+
 }

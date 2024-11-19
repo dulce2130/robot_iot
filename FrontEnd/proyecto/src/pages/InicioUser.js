@@ -5,7 +5,7 @@ import typewriterEffect from '../funciones/funciones.js';
 import NavBar from "../components/NavBar.js";
 import Charts from "../components/Charts.js";
 import Footer from "../components/Footer.js";
-
+import robot from "../images/robotTransparente.png";
 
 const Inicio = () => {
     const { user } = useContext(AuthContext);
@@ -97,6 +97,9 @@ const Inicio = () => {
                             <strong>🔊 Ruido:</strong> {sensorData.sound}
                         </li>
                     </ul>
+                    <div>
+                        <img  src={robot}/>
+                    </div>
                 </aside>
                 <Charts />
 
