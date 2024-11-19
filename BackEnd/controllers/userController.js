@@ -7,7 +7,6 @@ import nodemailer, { createTransport } from "nodemailer";
 const registrar = async (req, res) => {
     const { email, nombre, password } = req.body;
 
-    // Verificar si el usuario ya existe
     const existeUsuario = await User.findOne({ email });
     console.log("Contraseña recibida:", password);
 
@@ -17,7 +16,6 @@ const registrar = async (req, res) => {
     }
 
     try {
-        // Crear nuevo usuario
         const user = new User(req.body);
         console.log("Hash de la contraseña antes de guardar:", user.password);
 
@@ -35,7 +33,6 @@ const registrar = async (req, res) => {
             }
         });
 
-        // Opciones de correo
         const mailOptions = {
             from: 'sanchezeria9@gmail.com',
             to: email,
@@ -63,7 +60,6 @@ const registrar = async (req, res) => {
             `
         };
 
-        // Enviar el correo de confirmación
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 console.error("Error al enviar el correo:", error);
@@ -92,7 +88,6 @@ const confirmar = async (req, res) => {
     }
 
     try {
-        //usuarioConfirmar.token = null;
         usuarioConfirmar.confirmado = true;
         await usuarioConfirmar.save();
 
@@ -101,7 +96,7 @@ const confirmar = async (req, res) => {
         setTimeout(async () => {
             usuarioConfirmar.confirmado = true;
             await usuarioConfirmar.save();
-        }, 5000);
+        }, 2000);
 
 
     } catch (e) {
