@@ -1,32 +1,40 @@
-import jwt from "jsonwebtoken";
-import Veterinario from "../models/Usuario.js";
-
 const checkAuth = async (req, res, next) => {
-    console.log(req.headers)
+    console.log("Encabezados recibidos:", req.headers);
     let token;
 
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         try {
+            // Extraer el token del encabezado
+            token = req.headers.authorization.split(" ")[1];
+            console.log("Token extraído:", token);
 
-            token = req.headers.authorization.split(" ")[1]
-            const decoded = jwt.verify(token, "palabraultrasecreta")
-            req.veterinario = await Veterinario.findById(decoded.id).select("-password -token -confirmado")
+            // Verificar y decodificar el token
+            const decoded = jwt.verify(token, "palabraultrasecreta");
+            console.log("Token decodificado:", decoded);
 
+            // Buscar el usuario en la base de datos
+            req.user = await User.findById(decoded.id).select("-password -token -confirmado");
+            console.log("Usuario encontrado:", req.user);
+
+            if (!req.user) {
+                console.error("Usuario no encontrado en la base de datos.");
+                throw new Error("Usuario no encontrado.");
+            }
+
+            // Usuario autenticado, continúa con la siguiente función
             return next();
-            
         } catch (e) {
-            const error = new Error("Token no valido")
-            return res.status(403).json({mensaje: error.message})
-        }        
+            console.error("Error en checkAuth:", e.message);
+            return res.status(403).json({ mensaje: "Token no válido o usuario no encontrado." });
+        }
     }
 
     if (!token) {
-        const error = new Error("Token no valido o inexistente")
-
-        return res.status(403).json({mensaje: error.message})
+        console.error("Token no proporcionado o formato incorrecto.");
+        return res.status(403).json({ mensaje: "Token no válido o inexistente." });
     }
 
     next();
-}
+};
 
-export default checkAuth
+export default checkAuth;

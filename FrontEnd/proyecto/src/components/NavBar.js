@@ -39,7 +39,7 @@ const NavBar = ({ showMenu }) => {
               <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contacto</Link>
             </li>
             <li>
-              <Link to="/services" className={location.pathname === '/perfil' ? 'active' : ''}>Perfil</Link>
+              <Link to="/perfil" className={location.pathname === '/perfil' ? 'active' : ''}>Perfil</Link>
             </li>
             <li>
               <button onClick={handleLogout} className="logout-button">

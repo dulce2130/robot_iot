@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Contacto from "./pages/Contacto.js";
 import About from './pages/About.js';
 import Services from './pages/Services.js';
+import Perfil from './pages/Perfil.js';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/contact" element={<Contacto />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/perfil" element={<Perfil />} />
 
             <Route path='inicio' element={
               <PrivateRoute>

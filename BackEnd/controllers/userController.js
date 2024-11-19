@@ -5,72 +5,79 @@ import nodemailer, { createTransport } from "nodemailer";
 
 
 const registrar = async (req, res) => {
-    const { email, nombre } = req.body
+    const { email, nombre, password } = req.body;
 
-    const existeUsuario = await User.findOne({ email })
+    // Verificar si el usuario ya existe
+    const existeUsuario = await User.findOne({ email });
+    console.log("Contraseña recibida:", password);
 
     if (existeUsuario) {
-        const error = new Error("Usuario ya registrado")
-        return res.status(400).json({ mensaje: error.message })
+        const error = new Error("Usuario ya registrado");
+        return res.status(400).json({ mensaje: error.message });
     }
 
     try {
+        // Crear nuevo usuario
+        const user = new User(req.body);
+        console.log("Hash de la contraseña antes de guardar:", user.password);
 
-        const user = new User(req.body)
-        const userSave = await user.save()
+        // Guardar usuario en la base de datos (solo una vez)
+        await user.save();
+        console.log("Usuario guardado con éxito");
 
-        console.log("Eviando email...")
-
+        // Configuración de transporte para enviar el correo
+        console.log("Enviando email...");
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: 'sanchezeria9@gmail.com',
                 pass: 'ormm foxe gchx whrh'
             }
-        })
+        });
 
+        // Opciones de correo
         const mailOptions = {
             from: 'sanchezeria9@gmail.com',
             to: email,
             subject: 'Confirma tu cuenta',
             html: `
                 <div style="font-family: Arial, sans-serif; line-height: 1.8; color: #333; background-color: #f7f7f7; padding: 20px;">
-    <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
-        <h1 style="color: #227B94; text-align: center;">Hola, ${nombre}</h1>
-        <p style="font-size: 16px;">¡Gracias por registrarte en nuestro servicio! Estamos emocionados de que te unas a nuestra comunidad. Por favor, haz clic en el botón de abajo para confirmar tu cuenta:</p>
-        <div style="text-align: center; margin: 30px 0;">
-            <a href="http://localhost:3000/confirmar/${user.token}" 
-               style="display: inline-block; padding: 12px 25px; background-color: #227B94; color: #fff; text-decoration: none; font-size: 18px; font-weight: bold; border-radius: 50px; transition: background-color 0.3s;">
-                Confirmar Cuenta
-            </a>
-        </div>
-        <p style="font-size: 16px;">Si no solicitaste esta cuenta, puedes ignorar este correo sin ningún problema. No se tomarán más acciones.</p>
-        <p style="font-size: 16px;">Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.</p>
-        <br>
-        <p style="font-size: 16px;">Saludos cordiales,</p>
-        <p style="font-size: 16px; font-weight: bold;">El equipo de desarrollo</p>
-        <hr style="border: none; height: 1px; background-color: #ddd; margin: 20px 0;">
-        <p style="font-size: 12px; color: #999; text-align: center;">Este correo fue enviado automáticamente, por favor no respondas a este mensaje.</p>
-    </div>
-</div>
+                    <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                        <h1 style="color: #227B94; text-align: center;">Hola, ${nombre}</h1>
+                        <p style="font-size: 16px;">¡Gracias por registrarte en nuestro servicio! Estamos emocionados de que te unas a nuestra comunidad. Por favor, haz clic en el botón de abajo para confirmar tu cuenta:</p>
+                        <div style="text-align: center; margin: 30px 0;">
+                            <a href="http://localhost:3000/confirmar/${user.token}" 
+                               style="display: inline-block; padding: 12px 25px; background-color: #227B94; color: #fff; text-decoration: none; font-size: 18px; font-weight: bold; border-radius: 50px; transition: background-color 0.3s;">
+                                Confirmar Cuenta
+                            </a>
+                        </div>
+                        <p style="font-size: 16px;">Si no solicitaste esta cuenta, puedes ignorar este correo sin ningún problema. No se tomarán más acciones.</p>
+                        <p style="font-size: 16px;">Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.</p>
+                        <br>
+                        <p style="font-size: 16px;">Saludos cordiales,</p>
+                        <p style="font-size: 16px; font-weight: bold;">El equipo de desarrollo</p>
+                        <hr style="border: none; height: 1px; background-color: #ddd; margin: 20px 0;">
+                        <p style="font-size: 12px; color: #999; text-align: center;">Este correo fue enviado automáticamente, por favor no respondas a este mensaje.</p>
+                    </div>
+                </div>
+            `
+        };
 
-                `
-        }
-
+        // Enviar el correo de confirmación
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                console.error(error);
+                console.error("Error al enviar el correo:", error);
                 return res.status(500).send(error.toString());
             }
             res.status(200).json({ mensaje: 'Correo de confirmación enviado' });
         });
 
-
     } catch (e) {
-        console.log(e)
-        res.status(500).json({ mensaje: "Error al registar el usuario" })
+        console.log("Error en el registro:", e);
+        res.status(500).json({ mensaje: "Error al registrar el usuario" });
     }
-}
+};
+
 
 const confirmar = async (req, res) => {
     console.log(req.params.token)
@@ -104,26 +111,31 @@ const confirmar = async (req, res) => {
 
 const autenticar = async (req, res) => {
     const { email, password } = req.body;
-    console.log(email)
-    const usuario = await User.findOne({ email });
+    console.log("Email recibido:", email);
+    console.log("Contraseña recibida:", password);
 
+    const usuario = await User.findOne({ email });
     if (!usuario) {
-        const error = new Error("Usuario NO existe")
-        return res.status(400).json({ mensaje: error.message })
+        console.log("Usuario no encontrado");
+        return res.status(400).json({ mensaje: "Usuario NO existe" });
     }
 
     if (!usuario.confirmado) {
-        const error = new Error("Tu correo no ha sido confirmado")
-        return res.status(403).json({ mensaje: error.message })
+        console.log("Usuario no confirmado");
+        return res.status(403).json({ mensaje: "Tu correo no ha sido confirmado" });
     }
 
-    if (await usuario.ComprobarPassword(password)) {
-        res.json({ token: generarJWT(usuario.id), nombre: usuario.nombre })
+    const esValido = await usuario.ComprobarPassword(password);
+    console.log("¿Contraseña válida?", esValido);
+
+    if (esValido) {
+        res.json({ token: generarJWT(usuario.id), nombre: usuario.nombre });
     } else {
-        const error = new Error("El password es incorrecto")
-        return res.status(400).json({ mensaje: error.message })
+        console.log("Contraseña incorrecta");
+        return res.status(400).json({ mensaje: "El password es incorrecto" });
     }
-}
+};
+
 
 const perfil = (req, res) => {
     const { user } = req;

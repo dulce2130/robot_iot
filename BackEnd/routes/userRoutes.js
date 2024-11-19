@@ -9,7 +9,7 @@ const router = express.Router()
 
 router.post("/", registrar)
 
-router.get("/perfil", checkAuth, perfil)
+router.get("/profile", checkAuth, perfil)
 router.get("/confirmar/:token", confirmar)
 router.post("/login", autenticar)
 
