@@ -19,17 +19,18 @@ const registrar = async (req, res) => {
         const user = new User(req.body);
         console.log("Hash de la contraseña antes de guardar:", user.password);
 
-        // Guardar usuario en la base de datos (solo una vez)
         await user.save();
         console.log("Usuario guardado con éxito");
 
-        // Configuración de transporte para enviar el correo
         console.log("Enviando email...");
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: 'sanchezeria9@gmail.com',
                 pass: 'ormm foxe gchx whrh'
+            },
+            tls: {
+                rejectUnauthorized: false
             }
         });
 
@@ -146,14 +147,12 @@ const actualizarPerfil = async (req, res) => {
 
         const { telefono, profileImage } = req.body;
 
-        // Actualizar teléfono si se proporciona
         if (telefono) {
             usuario.telefono = telefono;
         }
 
-        // Actualizar imagen de perfil si se proporciona
         if (profileImage) {
-            usuario.profileImage = profileImage; // Guardar directamente en MongoDB
+            usuario.profileImage = profileImage; 
         }
 
         await usuario.save();
@@ -296,6 +295,9 @@ const recibirCorreo = async (req, res) => {
                 user: 'sanchezeria9@gmail.com',
                 pass: 'ormm foxe gchx whrh'
             },
+            tls: {
+                rejectUnauthorized: false
+            }
         });
 
         const mailOptions = {
